@@ -19,7 +19,9 @@ const POST_FILE = 'POST.json';
 
 // An X post address, as X shows it: https://x.com/<handle>/status/<id>
 // (twitter.com, www. or mobile. in front, and /i/web/status/<id> also read).
-const POST_URL = /^https:\/\/(www\.|mobile\.)?(x\.com|twitter\.com)\/[^/]+\/status\/\d+/;
+// A handle is 1-15 word characters; an id is digits only.
+const POST_URL =
+  /^https:\/\/(www\.|mobile\.)?(x\.com|twitter\.com)\/\w{1,15}\/status\/\d+/;
 
 const source = join(BOT_DIR, POST_FILE);
 const target = join(OUTPUT_DIR, POST_FILE);
@@ -44,3 +46,4 @@ if (typeof url !== 'string' || !POST_URL.test(url)) {
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
 copyFileSync(source, target);
+console.log(`POST.json copied to ${target} (${url})`);
